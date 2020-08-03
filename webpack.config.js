@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: ['babel-polyfill', './src/js/index.js'],
@@ -8,12 +9,16 @@ module.exports = {
         filename: 'js/bundle.js'
     },
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        open: 'edge'
     },
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
         })
     ],
     module: {
@@ -27,5 +32,8 @@ module.exports = {
             }
         ]
     },
-    devtool: 'source-map'
+    node: {
+        fs: "empty"
+    },
+    devtool: 'eval-source-map'
 };
